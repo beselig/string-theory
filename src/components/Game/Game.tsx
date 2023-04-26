@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useKeyEventHandler } from "../../shared/useKeyEventHandler";
-import { GuitarString, Note, getRandomGuitarString, getRandomNote } from "./new-game-api";
+import { GuitarString, Note, getRandomGuitarString, getRandomNote } from "./game-api";
 
 export const Game = () => {
     const [muted, setMuted] = useState(false);
