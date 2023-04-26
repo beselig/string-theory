@@ -5,6 +5,7 @@ import { useKeyEventHandler } from "../../shared/useKeyEventHandler";
 
 
 export const Game = () => {
+    const [muted, setMuted] = useState(false)
     const pair = useStringNotePair();
     const { guitarString, note } = pair || {};
 
@@ -16,7 +17,8 @@ export const Game = () => {
                 Play {note} on {guitarString}
             </h1>
             <p>Hit space to generate a new note</p>
-            <audio src={`/samples/${makeFileName(note)}.mp3`} autoPlay></audio>
+            {muted ? null : <audio src={`/samples/${makeFileName(note)}.mp3`} autoPlay></audio>}
+            <button role="button" className="bg-slate-200 text-slate-800 hover:bg-slate-300 active:scale-95" onClick={() => setMuted(prev => !prev)}>{muted ? "enable audio" : "mute audio"}</button>
         </>
     );
 };
