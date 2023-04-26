@@ -3,6 +3,7 @@ import { useState } from "react";
 import { GameApi, GuitarString, Note } from "./game-api";
 import { useKeyEventHandler } from "../../shared/useKeyEventHandler";
 
+
 export const Game = () => {
     const pair = useStringNotePair();
     const { guitarString, note } = pair || {};
@@ -16,13 +17,6 @@ export const Game = () => {
             </h1>
             <p>Hit space to generate a new note</p>
             <audio src={`/samples/${makeFileName(note)}.mp3`} autoPlay></audio>
-            {/* <button
-                onClick={() => {
-                    generateNewStringNotePair();
-                }}
-            >
-                click
-            </button> */}
         </>
     );
 };
