@@ -10,22 +10,26 @@ export const Game = () => {
     if (!guitarString || !note) return <>Loading ...</>;
 
     return (
-        <>
-            <p>
-                Play <span className="text-4xl font-bold">{note}</span>
-                <br />
-                on <span className="text-4xl font-bold">{guitarString}</span>
-            </p>
+        <div className="flex flex-col gap-4 items-center">
+            <p>Play</p>
+            <div className="flex gap-3 items-center">
+                <div className="w-14 flex justify-end text-4xl font-bold">{note}</div>
+                <div className="w-5">
+                    <span>on</span>
+                </div>
+                <div className="w-14 flex text-4xl font-bold">{guitarString}</div>
+            </div>
+            <p></p>
             <p>Hit space to generate a new note</p>
             {!muted && <audio src={`/samples/simple/${makeFileName(note)}.mp3`} autoPlay></audio>}
             <button
                 role="button"
-                className="bg-slate-200 text-slate-800 hover:bg-slate-300 active:scale-95"
+                className="p-2 bg-slate-200 text-slate-800 hover:bg-slate-300 active:scale-95"
                 onClick={() => setMuted((prev) => !prev)}
             >
                 {muted ? "enable audio" : "mute audio"}
             </button>
-        </>
+        </div>
     );
 };
 
