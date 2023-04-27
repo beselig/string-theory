@@ -1,7 +1,8 @@
-type Frequency = number;
-export type Note = "E" | "F" | "F#" | "G" | "G#" | "A" | "A#" | "B" | "C" | "C#" | "D" | "D#";
+export type Frequency = number;
+export type Note = (typeof NOTES)[number];
+export type GuitarString = (typeof GUITAR_STRINGS)[number];
+
 export const NOTES = ["E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#"] as const;
-export type GuitarString = "E" | "A" | "D" | "G" | "B" | "e";
 export const GUITAR_STRINGS = ["E", "A", "D", "G", "B", "e"] as const;
 
 export const Notes = new Map<Note, Frequency>(
@@ -19,5 +20,3 @@ export const getRandomNote = (): Note => {
 export const getRandomGuitarString = (): GuitarString => {
     return GUITAR_STRINGS[Math.floor(Math.random() * GUITAR_STRINGS.length)];
 };
-
-// TODO: samples for each note (rename the most pleasent sounding ones to match NOTES)

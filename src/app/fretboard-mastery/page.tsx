@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useKeyEventHandler } from "../../shared/useKeyEventHandler";
 import { GuitarString, Note, getRandomGuitarString, getRandomNote } from "./game-api";
 
-export const Game = () => {
+export default function FretboardMastery() {
     const [muted, setMuted] = useState(false);
     const { guitarString, note, next, noteSampleName } = useStringNotePair();
     useKeyEventHandler(["Space", "Enter"], () => {
@@ -11,7 +11,7 @@ export const Game = () => {
     });
 
     return (
-        <div
+        <main
             className="h-full w-full touch-none flex items-center justify-around"
             onTouchStart={next}
         >
@@ -35,9 +35,9 @@ export const Game = () => {
                     {muted ? "enable audio" : "mute audio"}
                 </button>
             </div>
-        </div>
+        </main>
     );
-};
+}
 
 const useStringNotePair = () => {
     const makeFileName = (note: Note) => {
