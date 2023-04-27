@@ -5,8 +5,8 @@ import GithubMark from "../../public/images/github-mark-white.svg";
 
 export const Navigation = () => {
     return (
-        <nav className="w-full h-14 bg-teal-950 bg-opacity-30 border-b border-teal-950">
-            <div className="container m-auto flex items-center gap-4 h-full">
+        <nav className="h-14 w-full border-b border-teal-950 bg-teal-950 bg-opacity-30">
+            <div className="container m-auto flex h-full items-center gap-4">
                 <NavItem href="/">Home</NavItem>
                 <div className="ml-auto">
                     <NavItem href="https://github.com/beselig/string-theory" target="_blank">
@@ -22,7 +22,7 @@ const NavItem = (props: PropsWithChildren<AnchorHTMLAttributes<HTMLAnchorElement
     return (
         <Link
             {...props}
-            className=" transition-colors text-teal-300 hover:text-teal-100 hover:underline"
+            className=" text-teal-300 transition-colors hover:text-teal-100 hover:underline"
         />
     );
 };

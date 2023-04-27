@@ -17,10 +17,7 @@ class ApiClient implements ApiClient {
             throw new Error("incomplete env vars for supabase");
         }
 
-        return (this.client = createClient(
-            process.env.SUPABASE_URL,
-            process.env.SUPABASE_KEY
-        ));
+        return (this.client = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY));
     }
 }
 
