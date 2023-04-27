@@ -11,7 +11,10 @@ export const Game = () => {
     });
 
     return (
-        <div className="bg-teal-600 h-full w-full touch-none" onTouchStart={next}>
+        <div
+            className="h-full w-full touch-none flex items-center justify-around"
+            onTouchStart={next}
+        >
             <div className="flex flex-col gap-4 items-center">
                 <p>Play</p>
                 <div className="flex gap-3 items-center">
