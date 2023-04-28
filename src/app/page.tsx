@@ -1,4 +1,6 @@
+import { CaretRightIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import { PropsWithChildren } from "react";
 
 export default function Home() {
     return (
@@ -13,18 +15,22 @@ const Exercises = () => {
         <section className="h-32 text-center">
             <div className="flex flex-col items-center justify-center">
                 <Link href="/fretboard-mastery">
-                    <div className="group flex h-32 w-40 items-center justify-around rounded-md border border-teal-500 bg-teal-950 p-3 uppercase transition-all hover:border-opacity-100 lg:border-teal-950 lg:border-opacity-50 lg:bg-opacity-0 lg:hover:bg-opacity-40">
-                        <div>
-                            Fretboard
-                            <br />
-                            Mastery
-                            <div className="overflow-hidden text-base leading-none transition-all group-hover:h-4 lg:h-0">
-                                {">"}
-                            </div>
-                        </div>
-                    </div>
+                    <Tile>Fretboard Mastery</Tile>
                 </Link>
             </div>
         </section>
+    );
+};
+
+const Tile = ({ children }: PropsWithChildren) => {
+    return (
+        <div className="group flex h-32 w-40 items-center justify-around rounded-md border border-teal-950 bg-teal-800 p-3 uppercase text-white transition-all dark:bg-opacity-30 hover:dark:bg-opacity-40">
+            <div>
+                {children}
+                <div className="h-6 overflow-hidden text-base leading-none transition-all group-hover:h-6 group-hover:overflow-visible lg:h-0">
+                    <CaretRightIcon className="inline h-8 w-8 scale-100 transition-transform group-hover:scale-100 lg:scale-0" />
+                </div>
+            </div>
+        </div>
     );
 };
