@@ -11,7 +11,6 @@ import {
     getRandomGuitarString,
     getRandomNote,
 } from "./game-api";
-import { isMobileOrTablet } from "../../shared/isMobileOrTablet";
 
 export default function FretboardMastery() {
     const [muted, setMuted] = useState(true);
@@ -32,16 +31,9 @@ export default function FretboardMastery() {
                 </div>
                 <p className="text-sm">play</p>
                 <div className="h1">{note}</div>
-                <p></p>
 
                 <p className="text-sm">
-                    {isMobileOrTablet() ? (
-                        <p>Tap the screen</p>
-                    ) : (
-                        <p>
-                            Press {"<Space>"} or {"<Enter>"}
-                        </p>
-                    )}
+                    Tap the screen on mobile, or press {"<Space>"} or {"<Enter>"}
                 </p>
                 {!muted && <audio src={`/samples/simple/${noteSampleName}.mp3`} autoPlay></audio>}
                 <button
