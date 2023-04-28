@@ -1,13 +1,20 @@
 "use client";
+import * as Dialog from "@radix-ui/react-dialog";
+import { Cross2Icon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { useKeyEventHandler } from "../../shared/useKeyEventHandler";
-import { GuitarString, Note, getRandomGuitarString, getRandomNote } from "./game-api";
-import * as Dialog from "@radix-ui/react-dialog";
 import { Rules } from "./Rules";
-import { Cross2Icon } from "@radix-ui/react-icons";
+import {
+    GUITAR_STRINGS,
+    GuitarString,
+    Note,
+    getRandomGuitarString,
+    getRandomNote,
+} from "./game-api";
+import { isMobileOrTablet } from "../../shared/isMobileOrTablet";
 
 export default function FretboardMastery() {
-    const [muted, setMuted] = useState(false);
+    const [muted, setMuted] = useState(true);
     const { guitarString, note, next, noteSampleName } = useStringNotePair();
     useKeyEventHandler(["Space", "Enter"], () => {
         next();
@@ -19,16 +26,23 @@ export default function FretboardMastery() {
             onTouchStart={next}
         >
             <div className="flex flex-1 flex-col items-center justify-center gap-4">
-                <p>Play</p>
-                <div className="flex items-center gap-3">
-                    <div className="flex w-14 justify-end text-4xl font-bold">{note}</div>
-                    <div className="w-5">
-                        <span>on</span>
-                    </div>
-                    <div className="flex w-14 text-4xl font-bold">{guitarString}</div>
+                <p className="text-sm">On</p>
+                <div className="h1 flex justify-end">
+                    {GuitarStringUtteranceMap[guitarString]} string
                 </div>
+                <p className="text-sm">play</p>
+                <div className="h1">{note}</div>
                 <p></p>
-                <p>Hit space to generate a new note</p>
+
+                <p className="text-sm">
+                    {isMobileOrTablet() ? (
+                        <p>Tap the screen</p>
+                    ) : (
+                        <p>
+                            Press {"<Space>"} or {"<Enter>"}
+                        </p>
+                    )}
+                </p>
                 {!muted && <audio src={`/samples/simple/${noteSampleName}.mp3`} autoPlay></audio>}
                 <button
                     role="button"
@@ -82,6 +96,7 @@ const useStringNotePair = () => {
     const makeFileName = (note: Note) => {
         return note.replace("#", "_sharp");
     };
+
     const getStringNotePair = (): { guitarString: GuitarString; note: Note } => {
         return {
             guitarString: getRandomGuitarString(),
@@ -98,6 +113,30 @@ const useStringNotePair = () => {
         note,
         guitarString,
         noteSampleName: makeFileName(note),
-        next: () => setStringNotePair(getStringNotePair()),
+        next: () => {
+            speechSynthesis.cancel();
+            // update state
+            const next = getStringNotePair();
+            setStringNotePair(next);
+
+            // say guitar string and note
+            const utterance = makeUtterance(next.note, next.guitarString);
+            speechSynthesis.speak(utterance);
+        },
     };
 };
+
+const makeUtterance = (note: Note, guitarString: GuitarString) => {
+    return new SpeechSynthesisUtterance(
+        `On ${GuitarStringUtteranceMap[guitarString]} string, play, ${note}`
+    );
+};
+
+const GuitarStringUtteranceMap: Record<(typeof GUITAR_STRINGS)[number], string> = {
+    e: "first",
+    B: "second",
+    G: "third",
+    D: "fourth",
+    A: "fifth",
+    E: "sixth",
+} as const;
