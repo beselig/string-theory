@@ -102,8 +102,8 @@ const useStringNotePair = () => {
 };
 
 const useVoiceFeedback = (enabled: boolean, note: Note, guitarString: GuitarString) => {
-    speechSynthesis.cancel();
     useEffect(() => {
+        window.speechSynthesis.cancel();
         if (enabled) {
             // say guitar string and note
             const utterance = new SpeechSynthesisUtterance(
