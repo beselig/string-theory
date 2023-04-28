@@ -1,33 +1,45 @@
 "use client";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Cross2Icon } from "@radix-ui/react-icons";
+import { Cross2Icon, QuestionMarkIcon, SpeakerLoudIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
-import { Rules } from "../../../app/fretboard-mastery/Rules";
-import { GUITAR_STRINGS, GuitarString, GuitarStringUtteranceMap, NOTES, Note } from "./data";
 import { useKeyEventHandler } from "../../../shared/useKeyEventHandler";
-import { Prompt, HowTo, AudioFeedback } from "./components";
-import { FretboardMasteryProps } from "./types";
+import { Button } from "../../Button";
+import { AudioFeedback, HowTo, Prompt, Rules } from "./components";
+import { GUITAR_STRINGS, GuitarString, GuitarStringUtteranceMap, NOTES, Note } from "./data";
 
-export const FretboardMasteryExercise = ({
-    audioFeedback,
-    voiceFeedback,
-}: FretboardMasteryProps) => {
+export const FretboardMasteryExercise = () => {
+    const [audioFeedback, setAudioFeedback] = useState(false);
+    const [voiceFeedback, setVoiceFeedback] = useState(true);
     const { guitarString, note, next } = useStringNotePair();
 
-    useVoiceFeedback(voiceFeedback, note, guitarString);
+    const toggleFeedback = () => {
+        const current = audioFeedback;
+        setAudioFeedback(!current);
+        setVoiceFeedback(current);
+    };
+
+    useVoiceFeedback(!!voiceFeedback, note, guitarString);
 
     useKeyEventHandler(["Space", "Enter"], () => {
         next();
     });
 
     return (
-        <>
+        <div
+            className="flex h-full w-full flex-col items-center justify-between"
+            onTouchStart={next}
+        >
             <div className="flex flex-1 flex-col items-center justify-center gap-4">
                 <Prompt note={note} guitarString={guitarString} />
                 <HowTo />
                 {audioFeedback && <AudioFeedback src={makeSampleSrc(note)} />}
             </div>
-            <div className="mt-auto max-w-[800px] py-10">
+            <div className="mt-auto flex max-w-[800px] gap-5 py-10">
+                <Button onClick={toggleFeedback}>
+                    {audioFeedback && "Voice"}
+                    {voiceFeedback && "Guitar"}
+                    <SpeakerLoudIcon />
+                </Button>
                 <div className="hidden lg:block">
                     <article>
                         <h3 className="uppercase">How to play</h3>
@@ -37,9 +49,9 @@ export const FretboardMasteryExercise = ({
                 <div className="lg:hidden">
                     <Dialog.Root>
                         <Dialog.Trigger asChild>
-                            <button className="inline-flex h-[35px] items-center justify-center rounded-[4px] bg-white px-[15px] font-medium leading-none text-black shadow-[0_2px_10px] shadow-black hover:bg-teal-100 focus:shadow-[0_0_0_2px] focus:shadow-black focus:outline-none">
-                                How to play?
-                            </button>
+                            <Button>
+                                How to play <QuestionMarkIcon />
+                            </Button>
                         </Dialog.Trigger>
                         <Dialog.Portal>
                             <Dialog.Overlay className="data-[state=open]:animate-overlayShow fixed inset-0 bg-black" />
@@ -60,10 +72,10 @@ export const FretboardMasteryExercise = ({
                                 </Dialog.Close>
                             </Dialog.Content>
                         </Dialog.Portal>
-                    </Dialog.Root>{" "}
+                    </Dialog.Root>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

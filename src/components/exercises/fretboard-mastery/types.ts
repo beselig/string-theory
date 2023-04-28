@@ -1,10 +1,10 @@
 type WithAudioFeedback = {
-    audioFeedback: true;
-    voiceFeedback: false;
+    audioFeedback?: true;
+    voiceFeedback?: false;
 };
 type WithVoiceFeedback = {
-    voiceFeedback: true;
-    audioFeedback: false;
+    voiceFeedback?: true;
+    audioFeedback?: false;
 };
 
 export type FretboardMasteryProps = {
