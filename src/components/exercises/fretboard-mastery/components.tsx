@@ -23,8 +23,12 @@ export const HowTo = () => {
     );
 };
 
-export const AudioFeedback = ({ src }: { src: string }) => {
-    return <audio src={src} autoPlay></audio>;
+export const AudioFeedback = ({ note }: { note: NoteValue }) => {
+    return <audio src={makeSampleSrc(note)} autoPlay></audio>;
+};
+
+const makeSampleSrc = (note: NoteValue) => {
+    return `/samples/simple/${note.replace("#", "_sharp")}.mp3`;
 };
 
 export const Rules = () => {

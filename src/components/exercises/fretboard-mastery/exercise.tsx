@@ -1,25 +1,45 @@
 "use client";
+import { Combobox, ComboboxItem } from "@/components/Combobox";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
     Cross2Icon,
     LoopIcon,
     QuestionMarkIcon,
-    ShadowInnerIcon,
     SpeakerLoudIcon,
     SpeakerOffIcon,
-    SwitchIcon,
 } from "@radix-ui/react-icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useKeyEventHandler } from "../../../shared/useKeyEventHandler";
 import { Button } from "../../Button";
 import { AudioFeedback, HowTo, Prompt, Rules } from "./components";
-import { GUITAR_STRINGS, GuitarString, GuitarStringUtteranceMap, NOTES, NoteValue } from "./data";
+import { NOTES, NoteValue } from "./data";
+import { useStringNotePair, useVoiceFeedback } from "./hooks/hooks";
+
+type Mode = ComboboxItem<NoteValue[]>;
+const modes: Mode[] = [
+    {
+        id: "all",
+        name: "All notes",
+        value: NOTES,
+    },
+    {
+        id: "cmajor",
+        name: "C Major",
+        value: ["c", "d", "e", "f", "g", "a", "b"],
+    },
+    {
+        id: "dmajor",
+        name: "D Major",
+        value: ["d", "e", "f#", "g", "a", "b", "c#"],
+    },
+];
 
 export const FretboardMasteryExercise = () => {
+    const [mode, setMode] = useState<(typeof modes)[number]>(modes[0]);
     const [muteAll, setMuteAll] = useState(false);
     const [audioFeedback, setAudioFeedback] = useState(false);
     const [voiceFeedback, setVoiceFeedback] = useState(true);
-    const { guitarString, note, next } = useStringNotePair();
+    const { guitarString, note, next } = useStringNotePair(mode.value);
 
     const toggleFeedback = () => {
         const current = audioFeedback;
@@ -39,9 +59,10 @@ export const FretboardMasteryExercise = () => {
             onTouchStart={next}
         >
             <div className="flex flex-1 flex-col items-center justify-center gap-4">
+                <Combobox value={mode} items={modes} onChange={(value) => setMode(value as Mode)} />
                 <Prompt note={note} guitarString={guitarString} />
                 <HowTo />
-                {!muteAll && audioFeedback && <AudioFeedback src={makeSampleSrc(note)} />}
+                {!muteAll && audioFeedback && <AudioFeedback note={note} />}
             </div>
             <div className="mt-auto flex max-w-[800px] gap-5 py-10">
                 <Button onClick={toggleFeedback} disabled={muteAll}>
@@ -85,51 +106,4 @@ export const FretboardMasteryExercise = () => {
             </article>
         </div>
     );
-};
-
-const useStringNotePair = () => {
-    const getStringNotePair = (): { guitarString: GuitarString; note: NoteValue } => {
-        return {
-            guitarString: getRandomGuitarString(),
-            note: getRandomNote(),
-        };
-    };
-
-    const [{ guitarString, note }, setStringNotePair] = useState<{
-        note: NoteValue;
-        guitarString: GuitarString;
-    }>(getStringNotePair());
-
-    return {
-        note,
-        guitarString,
-        next: () => {
-            setStringNotePair(getStringNotePair());
-        },
-    };
-};
-
-const useVoiceFeedback = (enabled: boolean, note: NoteValue, guitarString: GuitarString) => {
-    useEffect(() => {
-        window.speechSynthesis.cancel();
-        if (enabled) {
-            // say guitar string and note
-            const utterance = new SpeechSynthesisUtterance(
-                `On ${GuitarStringUtteranceMap[guitarString]} string, play, ${note}`
-            );
-            speechSynthesis.speak(utterance);
-        }
-    }, [enabled, note, guitarString]);
-};
-
-const getRandomNote = (): NoteValue => {
-    return NOTES[Math.floor(Math.random() * NOTES.length)];
-};
-
-const getRandomGuitarString = (): GuitarString => {
-    return GUITAR_STRINGS[Math.floor(Math.random() * GUITAR_STRINGS.length)];
-};
-
-const makeSampleSrc = (note: NoteValue) => {
-    return `/samples/simple/${note.replace("#", "_sharp")}.mp3`;
 };
