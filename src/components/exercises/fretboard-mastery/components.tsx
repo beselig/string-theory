@@ -1,6 +1,7 @@
-import { Note, GuitarString, GuitarStringUtteranceMap } from "./data";
+import { GuitarString, GuitarStringUtteranceMap, NoteValue } from "./data";
+import { Score } from "./Score";
 
-export const Prompt = ({ note, guitarString }: { note: Note; guitarString: GuitarString }) => {
+export const Prompt = ({ note, guitarString }: { note: NoteValue; guitarString: GuitarString }) => {
     return (
         <>
             <div className="h1 flex justify-end">
@@ -8,6 +9,7 @@ export const Prompt = ({ note, guitarString }: { note: Note; guitarString: Guita
             </div>
             <p className="text-sm">Note:</p>
             <div className="h1">{note}</div>
+            <Score note={note} />
         </>
     );
 };

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useKeyEventHandler } from "../../../shared/useKeyEventHandler";
 import { Button } from "../../Button";
 import { AudioFeedback, HowTo, Prompt, Rules } from "./components";
-import { GUITAR_STRINGS, GuitarString, GuitarStringUtteranceMap, NOTES, Note } from "./data";
+import { GUITAR_STRINGS, GuitarString, GuitarStringUtteranceMap, NOTES, NoteValue } from "./data";
 
 export const FretboardMasteryExercise = () => {
     const [audioFeedback, setAudioFeedback] = useState(false);
@@ -80,7 +80,7 @@ export const FretboardMasteryExercise = () => {
 };
 
 const useStringNotePair = () => {
-    const getStringNotePair = (): { guitarString: GuitarString; note: Note } => {
+    const getStringNotePair = (): { guitarString: GuitarString; note: NoteValue } => {
         return {
             guitarString: getRandomGuitarString(),
             note: getRandomNote(),
@@ -88,7 +88,7 @@ const useStringNotePair = () => {
     };
 
     const [{ guitarString, note }, setStringNotePair] = useState<{
-        note: Note;
+        note: NoteValue;
         guitarString: GuitarString;
     }>(getStringNotePair());
 
@@ -101,7 +101,7 @@ const useStringNotePair = () => {
     };
 };
 
-const useVoiceFeedback = (enabled: boolean, note: Note, guitarString: GuitarString) => {
+const useVoiceFeedback = (enabled: boolean, note: NoteValue, guitarString: GuitarString) => {
     useEffect(() => {
         window.speechSynthesis.cancel();
         if (enabled) {
@@ -114,7 +114,7 @@ const useVoiceFeedback = (enabled: boolean, note: Note, guitarString: GuitarStri
     }, [enabled, note, guitarString]);
 };
 
-const getRandomNote = (): Note => {
+const getRandomNote = (): NoteValue => {
     return NOTES[Math.floor(Math.random() * NOTES.length)];
 };
 
@@ -122,6 +122,6 @@ const getRandomGuitarString = (): GuitarString => {
     return GUITAR_STRINGS[Math.floor(Math.random() * GUITAR_STRINGS.length)];
 };
 
-const makeSampleSrc = (note: Note) => {
+const makeSampleSrc = (note: NoteValue) => {
     return `/samples/simple/${note.replace("#", "_sharp")}.mp3`;
 };

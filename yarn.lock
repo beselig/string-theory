@@ -2811,6 +2811,11 @@ util-deprecate@^1.0.2:
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
+vexflow@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/vexflow/-/vexflow-4.1.0.tgz#ed444bada2a5beafb3129c5a6b0f6be9fb0e9a3c"
+  integrity sha512-y28wLS10nftuTERM9vQIzyW7vBZ1tNeF5mRNjRm+8wXsBp5J7oC2C+S7boNoyIJIjxd6qVV0aCw8pgKrfmlwhQ==
+
 webidl-conversions@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-3.0.1.tgz#24534275e2a7bc6be7bc86611cc16ae0a5654871"
