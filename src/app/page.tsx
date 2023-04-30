@@ -24,7 +24,7 @@ const Exercises = () => {
 
 const Tile = ({ children }: PropsWithChildren) => {
     return (
-        <div className="group flex h-32 w-40 items-center justify-around rounded-md border border-teal-950 bg-teal-800 p-3 uppercase text-white transition-all dark:bg-opacity-30 hover:dark:bg-opacity-40">
+        <div className="group flex h-32 w-40 items-center justify-around rounded-md border border-slate-950 bg-slate-800 p-3 uppercase text-white transition-all dark:bg-opacity-30 hover:dark:bg-opacity-40">
             <div>
                 {children}
                 <div className="h-6 overflow-hidden text-base leading-none transition-all group-hover:h-6 group-hover:overflow-visible lg:h-0">

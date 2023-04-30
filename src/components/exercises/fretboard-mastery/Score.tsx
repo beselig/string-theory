@@ -1,13 +1,15 @@
 // vexflow:
 import { useEffect, useRef } from "react";
-import { Accidental, Formatter, Renderer, Stave, StaveNote, Voice } from "vexflow";
+import { Accidental, Annotation, Formatter, Renderer, Stave, StaveNote, Voice } from "vexflow";
 import { NoteValue } from "./data";
 
 const makeStaveNote = (note: NoteValue) => {
     const notes = new StaveNote({ keys: [note + "/4"], duration: "w" });
+    notes.addModifier(new Annotation(note));
     if (note.includes("#")) notes.addModifier(new Accidental("#"));
     return notes;
 };
+
 export const Score = ({ note }: { note: NoteValue }) => {
     const ref = useRef<HTMLCanvasElement>(null);
     useEffect(() => {
@@ -22,7 +24,9 @@ export const Score = ({ note }: { note: NoteValue }) => {
         const stave = new Stave(20 /** x */, -10 /** y */, 200)
             .setContext(context)
             .addClef("treble")
-            .addTimeSignature("4/4");
+            .addTimeSignature("4/4")
+            .setEndBarType(3);
+
         stave.draw();
 
         const voice = new Voice({ num_beats: 4, beat_value: 4 });
@@ -35,10 +39,8 @@ export const Score = ({ note }: { note: NoteValue }) => {
     });
 
     return (
-        <canvas
-            ref={ref}
-            id="vexflow"
-            className="rounded-md bg-white shadow-lg shadow-slate-300"
-        ></canvas>
+        <div className="rounded-md bg-white shadow-lg">
+            <canvas ref={ref} id="vexflow" className=""></canvas>
+        </div>
     );
 };
