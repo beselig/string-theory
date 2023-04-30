@@ -18,9 +18,10 @@ export const Score = ({ note }: { note: NoteValue }) => {
 
         const renderer = new Renderer(ref.current, Renderer.Backends.CANVAS);
 
-        renderer.resize(240, 100);
+        renderer.resize(480, 200);
 
         const context = renderer.getContext();
+        context.scale(2, 2);
         const stave = new Stave(20 /** x */, -10 /** y */, 200)
             .setContext(context)
             .addClef("treble")
