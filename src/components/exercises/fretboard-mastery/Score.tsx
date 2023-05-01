@@ -1,7 +1,7 @@
 // vexflow:
 import { useEffect, useRef } from "react";
 import { Accidental, Annotation, Formatter, Renderer, Stave, StaveNote, Voice } from "vexflow";
-import { NoteValue } from "./data";
+import { ModeItem, NoteValue } from "./data";
 
 const makeStaveNote = (note: NoteValue) => {
     const notes = new StaveNote({ keys: [note + "/4"], duration: "w" });
@@ -10,7 +10,7 @@ const makeStaveNote = (note: NoteValue) => {
     return notes;
 };
 
-export const Score = ({ note }: { note: NoteValue }) => {
+export const Score = ({ note, mode }: { note: NoteValue; mode: ModeItem }) => {
     const ref = useRef<HTMLCanvasElement>(null);
     useEffect(() => {
         if (ref.current === null) return;
@@ -18,15 +18,15 @@ export const Score = ({ note }: { note: NoteValue }) => {
 
         const renderer = new Renderer(ref.current, Renderer.Backends.CANVAS);
 
-        renderer.resize(480, 200);
+        renderer.resize(360, 150);
 
         const context = renderer.getContext();
-        context.scale(2, 2);
+        context.scale(1.5, 1.5);
         const stave = new Stave(20 /** x */, -10 /** y */, 200)
             .setContext(context)
-            .addClef("treble")
-            .addTimeSignature("4/4")
-            .setEndBarType(3);
+            .addClef("treble");
+        if (mode) stave.addKeySignature(mode.id);
+        stave.addTimeSignature("4/4").setEndBarType(3);
 
         stave.draw();
 

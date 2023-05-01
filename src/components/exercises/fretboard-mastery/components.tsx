@@ -1,13 +1,21 @@
-import { GuitarString, GuitarStringUtteranceMap, NoteValue } from "./data";
+import { GuitarString, GuitarStringUtteranceMap, ModeItem, NoteValue } from "./data";
 import { Score } from "./Score";
 
-export const Prompt = ({ note, guitarString }: { note: NoteValue; guitarString: GuitarString }) => {
+export const Prompt = ({
+    mode,
+    note,
+    guitarString,
+}: {
+    mode: ModeItem;
+    note: NoteValue;
+    guitarString: GuitarString;
+}) => {
     return (
         <>
             <div className="h1 flex justify-end">
                 {GuitarStringUtteranceMap[guitarString]} string
             </div>
-            <Score note={note} />
+            <Score note={note} mode={mode} />
         </>
     );
 };
@@ -23,7 +31,7 @@ export const HowTo = () => {
     );
 };
 
-export const AudioFeedback = ({ note }: { note: NoteValue }) => {
+export const PlaySample = ({ note }: { note: NoteValue }) => {
     return <audio src={makeSampleSrc(note)} autoPlay></audio>;
 };
 

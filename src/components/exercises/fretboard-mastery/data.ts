@@ -1,3 +1,5 @@
+import { ComboboxItem } from "@/components/Combobox";
+
 export type Frequency = number;
 export type NoteValue = (typeof NOTES)[number];
 export type GuitarString = (typeof GUITAR_STRINGS)[number];
@@ -17,3 +19,22 @@ export const GuitarStringUtteranceMap: Record<(typeof GUITAR_STRINGS)[number], s
     A: "fifth",
     E: "sixth",
 } as const;
+
+export type ModeItem = ComboboxItem<NoteValue[]>;
+export const modes: ModeItem[] = [
+    {
+        id: "C",
+        name: "All notes",
+        value: NOTES,
+    },
+    {
+        id: "C",
+        name: "C Major",
+        value: ["c", "d", "e", "f", "g", "a", "b"],
+    },
+    {
+        id: "D",
+        name: "D Major",
+        value: ["d", "e", "f#", "g", "a", "b", "c#"],
+    },
+];
