@@ -28,7 +28,7 @@ export const Combobox = ({ items, value, onChange }: ComboboxProps) => {
         <div className="relative text-slate-950">
             <CB value={value} onChange={onChange}>
                 <CB.Input<(typeof items)[number]>
-                    className="w-full rounded-sm border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 outline-none focus:ring-0"
+                    className="w-full rounded-md border-none bg-slate-100 py-1 pl-3 pr-10 text-sm leading-5 text-gray-900 outline-none focus:ring-0 active:bg-slate-200"
                     displayValue={(item) => item.name}
                     onChange={(event) => setQuery(event.target.value)}
                 />
@@ -36,7 +36,7 @@ export const Combobox = ({ items, value, onChange }: ComboboxProps) => {
                     <CaretSortIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                 </CB.Button>
 
-                <CB.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                <CB.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-slate-100 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                     {filteredItems.length === 0 && query !== "" ? (
                         <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                             Nothing found.
@@ -47,7 +47,7 @@ export const Combobox = ({ items, value, onChange }: ComboboxProps) => {
                                 key={item.id}
                                 className={({ active }) =>
                                     `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                        active ? "bg-teal-600 text-white" : "text-gray-900"
+                                        active ? "bg-slate-500 text-white" : "text-gray-900"
                                     }`
                                 }
                                 value={item}
@@ -64,7 +64,7 @@ export const Combobox = ({ items, value, onChange }: ComboboxProps) => {
                                         {selected ? (
                                             <span
                                                 className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                                    active ? "text-white" : "text-teal-600"
+                                                    active ? "text-white" : "text-slate-500"
                                                 }`}
                                             >
                                                 <CheckIcon className="h-5 w-5" aria-hidden="true" />
