@@ -18,7 +18,7 @@ export const FretboardMasteryExercise = () => {
 
     return (
         <div
-            className="flex h-full w-full flex-col items-center justify-between py-5 lg:py-10"
+            className="flex h-full w-full flex-col items-center justify-between p-2 md:pb-32 lg:pb-40"
             onTouchStart={next}
         >
             <div className="flex flex-1 flex-col items-center justify-center gap-4">
@@ -26,14 +26,15 @@ export const FretboardMasteryExercise = () => {
                 <HowTo />
                 {audioFeedback === "sample" && <PlaySample note={note} />}
             </div>
-            <div className="m-auto flex w-full max-w-[600px] flex-col gap-2 md:items-start">
-                <h3>Settings</h3>
-                <Toolbar
-                    audioFeedbackValue={audioFeedback}
-                    onAudioFeedbackChange={setAudioFeedback}
-                    mode={mode}
-                    onModeChange={setMode}
-                />
+            <div className="w-full">
+                <div className="m-auto flex w-full max-w-[600px] flex-col gap-2 md:items-start">
+                    <Toolbar
+                        audioFeedbackValue={audioFeedback}
+                        onAudioFeedbackChange={setAudioFeedback}
+                        mode={mode}
+                        onModeChange={setMode}
+                    />
+                </div>
             </div>
         </div>
     );
