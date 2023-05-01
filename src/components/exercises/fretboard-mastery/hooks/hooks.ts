@@ -26,11 +26,14 @@ export const useStringNotePair = (notes?: NoteValue[]) => {
 export const useVoiceFeedback = (enabled: boolean, note: NoteValue, guitarString: GuitarString) => {
     useEffect(() => {
         window.speechSynthesis.cancel();
+        console.log("useVoiceFeedback", note);
+
         if (enabled) {
             // say guitar string and note
             const utterance = new SpeechSynthesisUtterance(
-                `On ${GuitarStringUtteranceMap[guitarString]} string, play, ${note}`
+                `On ${GuitarStringUtteranceMap[guitarString]} string, play, ${note}.`
             );
+            utterance.voice = speechSynthesis.getVoices()[0];
             speechSynthesis.speak(utterance);
         }
     }, [enabled, note, guitarString]);
